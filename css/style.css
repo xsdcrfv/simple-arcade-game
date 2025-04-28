@@ -36,7 +36,8 @@ body {
     flex-wrap: wrap;
 }
 
-.score, .high-score {
+.score,
+.high-score {
     background-color: rgba(0, 0, 0, 0.7);
     padding: 5px 10px;
     border-radius: 5px;

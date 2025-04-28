@@ -48,17 +48,17 @@ canvas.addEventListener('touchstart', (e) => {
 canvas.addEventListener('touchmove', (e) => {
     e.preventDefault();
     if (touchStartX === null) return;
-    
+
     const touch = e.touches[0];
     const moveX = touch.clientX - touchStartX;
     const canvasRect = canvas.getBoundingClientRect();
     const scale = canvas.width / canvasRect.width;
-    
+
     player.x += moveX * scale;
-    
+
     // Keep player within bounds
     player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
-    
+
     touchStartX = touch.clientX;
 }, { passive: false });
 
@@ -111,12 +111,12 @@ function updatePlayer() {
 function updateObstacles() {
     for (let i = obstacles.length - 1; i >= 0; i--) {
         obstacles[i].y += obstacles[i].speed;
-        
+
         // Check collision
         if (checkCollision(player, obstacles[i])) {
             gameOver();
         }
-        
+
         // Remove obstacles that are off screen
         if (obstacles[i].y > canvas.height) {
             obstacles.splice(i, 1);
@@ -128,20 +128,20 @@ function updateObstacles() {
 
 function checkCollision(rect1, rect2) {
     return rect1.x < rect2.x + rect2.width &&
-           rect1.x + rect1.width > rect2.x &&
-           rect1.y < rect2.y + rect2.height &&
-           rect1.y + rect1.height > rect2.y;
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.y + rect1.height > rect2.y;
 }
 
 function draw() {
     // Clear canvas
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+
     // Draw player
     ctx.fillStyle = player.color;
     ctx.fillRect(player.x, player.y, player.width, player.height);
-    
+
     // Draw obstacles
     obstacles.forEach(obstacle => {
         ctx.fillStyle = obstacle.color;
@@ -186,12 +186,12 @@ function gameLoop() {
     if (!isGameOver) {
         updatePlayer();
         updateObstacles();
-        
+
         // Create new obstacles
         if (Math.random() < 0.02) {
             createObstacle();
         }
-        
+
         draw();
         animationId = requestAnimationFrame(gameLoop);
     }
